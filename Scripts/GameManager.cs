@@ -29,9 +29,6 @@ public class GameManager : MonoBehaviour
 
     private bool justStarted;
 
-    
-    //Updateに文字送りの処理を記述
-
 
     private void Awake()
     {
@@ -50,7 +47,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(dialogBox.activeInHierarchy)//ダイアログが表示されている時
+        {
+            if(Input.GetMouseButtonUp(1))//右クリックされると
+            {
+                if(!justStarted)//2回目以降の文字送りなら
+                {
+                    currentLine++;//右クリックされると一つ配列が進む
+
+                    if(currentLine >= dialogLines.Length)//配列が終わると
+                    {
+                        dialogBox.SetActive(false);//非表示になる
+                    }
+                    else//まだ配列があると
+                    {
+                        dialogText.text = dialogLines[currentLine];//さっき一つ進んだ配列の文字がテキストに入る
+                    }
+                }
+                else//最初のときは
+                {
+                    justStarted = false;//最初判定を消す＝最初のボタンクリックで文字送りをしないため
+                }
+            }
+        }
     }
 
     public void UpdateHealthUI()//PlayerControllerのHPをUIに適用
@@ -69,16 +88,17 @@ public class GameManager : MonoBehaviour
     //ダイアログを表示して表示する文章を設定、ダイアログの表示切り替え
     public void ShowDialog(string[] lines)
     {
-        dialogLines = lines;
-        currentLine = 0;
-        dialogText.text = dialogLines[currentLine];
+        dialogLines = lines;//引数をダイアログに入れる
+        currentLine = 0;//初期化
+        dialogText.text = dialogLines[currentLine];//最初のテキストを入れる
         dialogBox.SetActive(true);//表示されるようになる
 
-        justStarted = true;//文字送りがスタートされる
+        justStarted = true;//1回目のクリックを省くためのダミー
     }
 
+    //ダイアログの表示切り替えができる
     public void ShowDialogChange(bool x)
     {
-        dialog.SetActive(x);
+        dialogBox.SetActive(x);
     }
 }
