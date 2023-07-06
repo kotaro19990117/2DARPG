@@ -19,6 +19,19 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Slider stSlider;
 
+    //UI2つ,表示する文章、今何行目か、文字送り判定
+    public GameObject dialogBox;
+    public Text dialogText;
+
+    private string[] dialogLines;//string型の配列
+
+    private int currentLine;
+
+    private bool justStarted;
+
+    
+    //Updateに文字送りの処理を記述
+
 
     private void Awake()
     {
@@ -51,5 +64,21 @@ public class GameManager : MonoBehaviour
     {
         stSlider.maxValue = player.totalStamina;//stSlider.maxValueはSliderの中の値
         stSlider.value = player.currentStamina;
+    }
+
+    //ダイアログを表示して表示する文章を設定、ダイアログの表示切り替え
+    public void ShowDialog(string[] lines)
+    {
+        dialogLines = lines;
+        currentLine = 0;
+        dialogText.text = dialogLines[currentLine];
+        dialogBox.SetActive(true);//表示されるようになる
+
+        justStarted = true;//文字送りがスタートされる
+    }
+
+    public void ShowDialogChange(bool x)
+    {
+        dialog.SetActive(x);
     }
 }
