@@ -8,5 +8,6 @@ public class Title : MonoBehaviour
     public void GameStart()
     {
         SceneManager.LoadScene("Main");//メインに遷移
+        SoundManager.instance.PlaySE(0);
     }
 }

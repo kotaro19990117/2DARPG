@@ -28,6 +28,7 @@ public class Weapon : MonoBehaviour
         {
             //攻撃用の関数を呼び出す
             collision.gameObject.GetComponent<EnemyController>().TakeDamage(attackDamage, transform.position);
+            SoundManager.instance.PlaySE(0);
         }
     }
 }

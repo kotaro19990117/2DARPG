@@ -179,10 +179,12 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);//HPが負にならないように丸める
             invincibilityCounter = invincibilityTime;
+            SoundManager.instance.PlaySE(1);
         }
         if(currentHealth == 0)//死んだら
         {
             gameObject.SetActive(false);//Playerを非表示にする
+            SoundManager.instance.PlaySE(4);
         }
     GameManager.instance.UpdateHealthUI();//UIを更新する
     }
@@ -192,6 +194,7 @@ public class PlayerController : MonoBehaviour
         if(collision.tag == "Portion" && maxHealth > currentHealth && collision.GetComponent<Items>().waitTime <= 0)
         {
             Items items = collision.GetComponent<Items>();
+            SoundManager.instance.PlaySE(3);
             currentHealth = Mathf.Clamp(currentHealth + items.HealthItemRecoveryValue, 0, maxHealth);
             GameManager.instance.UpdateHealthUI();
             Destroy(collision.gameObject);

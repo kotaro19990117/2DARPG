@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         {
             if(Input.GetMouseButtonUp(1))//右クリックされると
             {
+                SoundManager.instance.PlaySE(3);
                 if(!justStarted)//2回目以降の文字送りなら
                 {
                     currentLine++;//右クリックされると一つ配列が進む
